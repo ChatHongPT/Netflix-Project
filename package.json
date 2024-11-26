@@ -1,7 +1,6 @@
 {
   "name": "Netflix-Project",
-  "homepage": "/Netflix-Project",
-  "private": true,
+  "homepage": "https://ChatHongPT.github.io/Netflix-Project",  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
