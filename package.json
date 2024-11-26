@@ -1,5 +1,6 @@
 {
-  "name": "movie-production-site",
+  "name": "Netflix-Project",
+  "homepage": "/Netflix-Project",
   "private": true,
   "version": "0.0.0",
   "type": "module",
