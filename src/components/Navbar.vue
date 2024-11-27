@@ -1,24 +1,90 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
-import { useAuth } from '../composables/useAuth'
+import { ref, onMounted, watch } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
+import { useAuth } from '../composables/useAuth';
 
-const { isAuthenticated, logout } = useAuth()
+const router = useRouter();
+const toast = useToast();
+const { isAuthenticated, checkAuth, logout } = useAuth();
+const isScrolled = ref(false);
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 0;
+};
+
+onMounted(() => {
+  checkAuth();
+  window.addEventListener('scroll', handleScroll);
+});
+
+watch(
+  () => router.currentRoute.value,
+  () => {
+    checkAuth();
+  },
+  { immediate: true }
+);
+
+const handleLogout = () => {
+  logout();
+  toast.success('로그아웃되었습니다');
+  router.push('/signin');
+};
 </script>
 
 <template>
-  <nav class="bg-gray-800 p-4">
-    <div class="container mx-auto flex justify-between items-center">
-      <RouterLink to="/" class="text-xl font-bold">MoviePro</RouterLink>
-      <div class="space-x-4">
-        <template v-if="isAuthenticated">
-          <RouterLink to="/" class="hover:text-gray-300">홈</RouterLink>
-          <RouterLink to="/trending" class="hover:text-gray-300">대세 콘텐츠</RouterLink>
-          <RouterLink to="/browse" class="hover:text-gray-300">찾아보기</RouterLink>
-          <RouterLink to="/my-list" class="hover:text-gray-300">내가 찜한 콘텐츠</RouterLink>
-          <button @click="logout" class="hover:text-gray-300">로그아웃</button>
-        </template>
-        <RouterLink v-else to="/signin" class="hover:text-gray-300">로그인</RouterLink>
+  <nav
+    class="fixed top-0 w-full z-50 transition-all duration-300 px-12 py-4"
+    :class="{
+      'bg-black': isScrolled,
+      'bg-gradient-to-b from-black/70 to-transparent': !isScrolled,
+    }"
+  >
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-8">
+        <RouterLink
+          to="/"
+          class="text-2xl font-bold text-red-600 no-underline hover:text-red-600"
+          >NETFLIX</RouterLink
+        >
+        <div v-if="isAuthenticated" class="flex space-x-6">
+          <RouterLink
+            to="/popular"
+            class="text-sm hover:text-gray-300 transition"
+            >대세 콘텐츠</RouterLink
+          >
+          <RouterLink
+            to="/search"
+            class="text-sm hover:text-gray-300 transition"
+            >찾아보기</RouterLink
+          >
+          <RouterLink
+            to="/wishlist"
+            class="text-sm hover:text-gray-300 transition"
+            >내가 찜한 콘텐츠</RouterLink
+          >
+        </div>
+      </div>
+      <div v-if="isAuthenticated" class="flex items-center space-x-4">
+        <button
+          @click="handleLogout"
+          class="text-sm hover:text-gray-300 transition"
+        >
+          로그아웃
+        </button>
       </div>
     </div>
   </nav>
 </template>
+
+<style scoped>
+.router-link-active:not(.text-red-600) {
+  color: #fff;
+  font-weight: 500;
+}
+
+.text-red-600 {
+  color: rgb(220, 38, 38) !important;
+}
+</style>

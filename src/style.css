@@ -4,4 +4,124 @@
 
 :root {
   color-scheme: dark;
+  font-size: 16px;
+}
+
+/* 모바일 기기에서 기본 폰트 크기 조정 */
+@media (max-width: 640px) {
+  :root {
+    font-size: 14px;
+  }
+  
+  h1 {
+    @apply text-lg;
+  }
+  
+  h2 {
+    @apply text-base;
+  }
+  
+  h3 {
+    @apply text-sm;
+  }
+  
+  .text-responsive {
+    @apply text-xs;
+  }
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+/* 모바일 포스터 크기 최적화 */
+@media (max-width: 640px) {
+  .movie-poster {
+    width: 100px !important;
+    height: 150px !important;
+  }
+  
+  .movie-row-poster {
+    width: 100px !important;
+    height: 150px !important;
+  }
+}
+
+/* 터치 디바이스 최적화 */
+@media (hover: none) {
+  .movie-card {
+    @apply active:scale-95 transition-transform;
+  }
+  
+  .touch-action-none {
+    touch-action: none;
+  }
+}
+
+/* 화면 방향 전환 시 최적화 */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .navbar-mobile {
+    @apply hidden;
+  }
+  
+  .content-landscape {
+    @apply mt-0;
+  }
+}
+
+/* 반응형 컨테이너 */
+.responsive-container {
+  @apply container mx-auto px-2 sm:px-6 lg:px-8;
+}
+
+/* 반응형 그리드 시스템 */
+.responsive-grid {
+  @apply grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-4;
+}
+
+/* 반응형 이미지 */
+.responsive-image {
+  @apply w-full h-auto object-cover;
+  aspect-ratio: 2/3;
+}
+
+/* 반응형 폰트 크기 */
+.text-responsive {
+  @apply text-xs sm:text-sm md:text-base;
+}
+
+/* 터치 타겟 크기 최적화 */
+.touch-target {
+  @apply min-h-[44px] min-w-[44px];
+}
+
+/* 스크롤바 스타일링 */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+/* 다크 모드 최적화 */
+@media (prefers-color-scheme: dark) {
+  .dark-mode-optimized {
+    @apply bg-black text-white;
+  }
 }

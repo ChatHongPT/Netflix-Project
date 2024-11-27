@@ -4,24 +4,10 @@ import App from './App.vue'
 import router from './router'
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
+import { intersectionObserver } from './directives/intersection-observer'
 
 const app = createApp(App)
-
-const toastOptions = {
-  position: 'top-right',
-  timeout: 3000,
-  closeOnClick: true,
-  pauseOnFocusLoss: true,
-  pauseOnHover: true,
-  draggable: true,
-  draggablePercent: 0.6,
-  showCloseButtonOnHover: false,
-  hideProgressBar: false,
-  closeButton: 'button',
-  icon: true,
-  rtl: false
-}
-
 app.use(router)
-app.use(Toast, toastOptions)
+app.use(Toast)
+app.directive('intersection-observer', intersectionObserver)
 app.mount('#app')
